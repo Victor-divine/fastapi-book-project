@@ -18,13 +18,19 @@ jobs:
       - name: Deploy Application
         run: |
           echo "Deployment process starts here"
-          
+
           # Fetch and reset to latest code
           git fetch origin main
           git reset --hard origin/main
-          
+
           # Build and push Docker image
           docker build -t victor448/fastapi-app .
           docker push victor448/fastapi-app
-          
+
+          # Restart Docker container
+          docker pull victor448/fastapi-app
+          docker stop fastapi-app || true
+          docker rm fastapi-app || true
+          docker run -d --name fastapi-app -p 8000:8000 victor448/fastapi-app
+
           # Optional: Run additional deployment steps here
