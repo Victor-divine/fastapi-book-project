@@ -1,6 +1,6 @@
 name: CI Pipeline
 
-on:
+on: 
   pull_request:
     branches:
       - main
@@ -10,29 +10,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
-
+        uses: actions/checkout@v2
+        
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v2
         with:
           python-version: '3.9'
-
+        
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip  # Upgrade pip first (good practice)
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
-
-      - name: Run Tests
+        
+      - name: Run tests
         run: pytest
-
-      - name: Codecov  # Optional: For code coverage reports
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }} # Store your Codecov token as a secret
-
-      - name: Slack Notification (Optional)
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }} # Store your Slack webhook as a secret
-          MESSAGE: "CI Pipeline for ${{ github.repository }} on branch ${{ github.ref }} ${{ job.status }}"
-          COLOR: ${{ job.status == 'success' && 'good' || 'danger' }} # Green for success, red for failure
+# This is a test comment to ensure changes are detected
