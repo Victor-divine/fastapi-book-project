@@ -12,6 +12,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.docker_login_u_victor448 }}" | docker login -u "docker_login_u_victor448" --password-stdin
+
       - name: Deploy Application
         run: |
           echo "Deployment process starts here"
@@ -21,7 +24,7 @@ jobs:
           git reset --hard origin/main
           
           # Build and push Docker image
-          docker build -t your-username/fastapi-app .
-          docker push your-username/fastapi-app
+          docker build -t docker_login_u_victor448/fastapi-app .
+          docker push docker_login_u_victor448/fastapi-app
           
           # Optional: Run additional deployment steps here
