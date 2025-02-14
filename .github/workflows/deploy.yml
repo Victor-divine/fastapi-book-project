@@ -15,3 +15,13 @@ jobs:
       - name: Deploy Application
         run: |
           echo "Deployment process starts here"
+          
+          # Fetch and reset to latest code
+          git fetch origin main
+          git reset --hard origin/main
+          
+          # Build and push Docker image
+          docker build -t your-username/fastapi-app .
+          docker push your-username/fastapi-app
+          
+          # Optional: Run additional deployment steps here
